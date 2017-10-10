@@ -67,6 +67,7 @@
     "build": "node client/scripts/build.js",
     "test": "node client/scripts/test.js --env=jsdom"
   },
+  "proxy": "http://localhost:1337",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
