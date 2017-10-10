@@ -139,4 +139,3 @@ yarn-error.log*
 
 /public
 /assets
-/views/layout.ejs
