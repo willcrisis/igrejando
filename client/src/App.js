@@ -3,6 +3,28 @@ import logo from './logo.svg';
 import './App.scss';
 
 class App extends Component {
+
+  constructor() {
+    super();
+    this.state = {apiStatus: false};
+  }
+
+  componentDidMount() {
+    this.fetchStatus();
+  }
+
+  async fetchStatus() {
+    try {
+      let status = await fetch('/status/check');
+      status = await status.json();
+      this.setState({apiStatus: status.isOK});
+    } catch (err) {
+      console.log(err);
+      this.setState({apiStatus: false});
+    }
+
+  }
+
   render() {
     return (
       <div className="App">
@@ -11,7 +33,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          API is {this.state.apiStatus ? 'UP' : 'DOWN'}!
         </p>
       </div>
     );
