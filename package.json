@@ -61,7 +61,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "debug": "node debug app.js",
+    "debug": "cross-env NODE_ENV=production yarn build && node debug app.js",
     "start": "cross-env NODE_ENV=production yarn build && node app.js",
     "dev": "node client/scripts/start.js",
     "build": "node client/scripts/build.js",
