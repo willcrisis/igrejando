@@ -62,12 +62,12 @@
   },
   "scripts": {
     "debug": "node debug app.js",
-    "start": "node client/scripts/start.js",
+    "start": "node app.js",
+    "dev": "node client/scripts/start.js",
     "build": "node client/scripts/build.js",
     "test": "node client/scripts/test.js --env=jsdom"
   },
-  "jest": {
-    "collectCoverageFrom": [
+  "jest": {    "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ],
     "setupFiles": [
