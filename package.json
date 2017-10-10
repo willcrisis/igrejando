@@ -61,8 +61,8 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "debug": "node_modules/.bin/cross-env NODE_ENV=production yarn build && node debug app.js",
-    "start": "node_modules/.bin/cross-env NODE_ENV=production yarn build && node app.js",
+    "debug": "yarn build && node debug app.js",
+    "start": "yarn build && node app.js",
     "dev": "node client/scripts/start.js",
     "build": "node client/scripts/build.js",
     "test": "node client/scripts/test.js --env=jsdom"
@@ -109,7 +109,6 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "cross-env": "^5.0.5",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6"
   },
