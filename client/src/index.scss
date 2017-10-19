@@ -1,5 +1,9 @@
+$fa-font-path:   "../../node_modules/font-awesome/fonts";
+
+@import '~bootstrap/dist/css/bootstrap.css';
+@import '~bootstrap/dist/css/bootstrap-theme.css';
+@import '~font-awesome/scss/font-awesome.scss';
+
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+  padding-top: 60px;
 }

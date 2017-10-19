@@ -1,0 +1,8 @@
+i.ig-icon {
+  &.has-click {
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
