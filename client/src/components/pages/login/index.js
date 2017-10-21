@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { loginWithProvider, loginWithEmail } from '../../../helpers/auth';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
@@ -11,6 +12,9 @@ import {Link} from 'react-router-dom';
 import Icon from '../../icon';
 
 export default class Login extends PureComponent {
+  static contextTypes = {
+    growl: PropTypes.object.isRequired,
+  };
 
   constructor(props) {
     super(props);
@@ -27,7 +31,7 @@ export default class Login extends PureComponent {
       //TODO save user in DB if not exists
       console.log(data);
     } catch (err) {
-      this.setState({ loginMessage: err.message });
+      this.context.growl.error(err.message);
     }
   };
 
@@ -38,7 +42,7 @@ export default class Login extends PureComponent {
       const data = await loginWithEmail(this.email.value, this.pw.value);
       console.log(data);
     } catch (err) {
-      this.setState({ loginMessage: err.message });
+      this.context.growl.error('Invalid Username or Password');
     }
   };
 

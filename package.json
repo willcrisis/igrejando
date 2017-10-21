@@ -55,6 +55,7 @@
     "rc": "1.0.1",
     "react": "^16.0.0",
     "react-bootstrap": "^0.31.3",
+    "react-bs-notifier": "^4.4.4",
     "react-dev-utils": "^4.1.0",
     "react-dom": "^16.0.0",
     "react-router-bootstrap": "^0.24.4",
