@@ -8,6 +8,7 @@ import Header from './layout/header';
 import Login from './pages/login';
 import Home from './pages/home';
 import Dashboard from './pages/dashboard';
+import Register from './pages/register';
 
 function PrivateRoute({ component: Component, authed, ...rest }) {
   return (
@@ -115,7 +116,7 @@ export default class App extends PureComponent {
               <Switch>
                 <PublicRoute authed={this.state.loggedIn} path='/' exact component={Home}/>
                 <PublicRoute authed={this.state.loggedIn} path='/login' component={Login}/>
-                {/*<PublicRoute authed={this.state.loggedIn} path='/register' component={Register} />*/}
+                <PublicRoute authed={this.state.loggedIn} path='/register' component={Register} />
                 <PrivateRoute authed={this.state.loggedIn} path='/dashboard' component={Dashboard}/>
                 <Route render={() => <h3>No Match</h3>}/>
               </Switch>

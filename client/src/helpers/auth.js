@@ -1,40 +1,48 @@
-import { firebaseAuth } from '../config/config'
+import { firebaseAuth } from '../config/config';
+import { authenticatedPost } from './fetch';
 
-export async function register(email, pw) {
-  const user = await firebaseAuth().createUserWithEmailAndPassword(email, pw);
-  return saveUser(user);
+export async function register({ email, pw, displayName }) {
+  let user = await firebaseAuth().createUserWithEmailAndPassword(email, pw);
+  await user.updateProfile({ displayName: displayName });
+  user = await firebaseAuth().currentUser;
+  await authenticatedPost('/user/validate', { user });
+  await user.sendEmailVerification();
+  return user;
 }
+
+export const socialLogin = async provider => {
+  const data = await loginWithProvider(provider);
+  await authenticatedPost('/user/validate', { user: data.user });
+};
 
 export function logout() {
   return firebaseAuth().signOut()
 }
 
 export async function loginWithProvider(provider) {
-  const auth = firebaseAuth();
-
   let providerInstance = fetchProviderByName(provider);
   try {
-    return await auth.signInWithPopup(providerInstance);
+    return await firebaseAuth().signInWithPopup(providerInstance);
   } catch (err) {
     if (err.code !== 'auth/account-exists-with-different-credential') {
       throw err;
     }
-
-    const {
-      credential,
-      email
-    } = err;
-
-    const providers = await auth.fetchProvidersForEmail(email);
-    if (providers[0] === 'password') {
-      //TODO do something
-    }
-
-    providerInstance = fetchProviderByName(providers[0]);
-    const result = await auth.signInWithPopup(providerInstance);
-    await result.user.linkWithCredential(credential);
-    return result;
+    return retryWithAnotherProvider(err);
   }
+}
+
+async function retryWithAnotherProvider({ credential, email }) {
+  const auth = firebaseAuth();
+
+  const providers = await auth.fetchProvidersForEmail(email);
+  if (providers[ 0 ] === 'password') {
+    throw new Error('An account already exists for this email address. Please login with your email and password, or try recovering your password.');
+  }
+
+  const providerInstance = fetchProviderByName(providers[ 0 ]);
+  const result = await auth.signInWithPopup(providerInstance);
+  await result.user.linkWithCredential(credential);
+  return result;
 }
 
 function fetchProviderByName(provider) {
@@ -60,10 +68,4 @@ export function loginWithEmail(email, pw) {
 
 export function resetPassword(email) {
   return firebaseAuth().sendPasswordResetEmail(email)
-}
-
-export function saveUser(user) {
-  //TODO save user in API
-  console.log(user);
-  return user;
 }
