@@ -25,10 +25,10 @@ export default class Header extends PureComponent {
             :
             <Nav pullRight>
               <LinkContainer to="/login">
-                <NavItem eventKey={1}>Login</NavItem>
+                <NavItem eventKey={2}>Login</NavItem>
               </LinkContainer>
               <LinkContainer to="/register">
-                <NavItem eventKey={2} href="#">Register</NavItem>
+                <NavItem eventKey={3}>Register</NavItem>
               </LinkContainer>
             </Nav>
           }

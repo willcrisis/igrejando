@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { socialLogin, loginWithEmail } from '../../../helpers/auth';
+import { register, socialLogin } from '../../../helpers/auth';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -26,13 +26,24 @@ export default class Login extends PureComponent {
     }
   };
 
-  login = async e => {
+  signUp = async e => {
     e.preventDefault();
 
+    if (this.pw.value !== this.pwConfirm.value) {
+      return this.context.growl.warning('Passwords doesn\'t match');
+    }
+
     try {
-      await loginWithEmail(this.email.value, this.pw.value);
+      const data = await register({ email: this.email.value, pw: this.pw.value, displayName: this.name.value });
+      console.log(data);
     } catch (err) {
-      this.context.growl.error('Invalid Username or Password');
+      const { code } = err;
+      if (code === 'auth/weak-password') {
+        return this.context.growl.warning('Password should be at least 6 characters');
+      } else if (code === 'auth/email-already-in-use') {
+        return this.context.growl.warning('The email address is already in use by another account.');
+      }
+      this.context.growl.error(err.message);
     }
   };
 
@@ -41,8 +52,11 @@ export default class Login extends PureComponent {
       <Grid>
         <Row>
           <Col sm={4} smOffset={4}>
-            <h1>Login</h1>
-            <Form onSubmit={this.login}>
+            <h1>Sign Up</h1>
+            <Form onSubmit={this.signUp}>
+              <FormGroup>
+                <FormControl inputRef={ref => this.name = ref} placeholder="Name"/>
+              </FormGroup>
               <FormGroup>
                 <FormControl inputRef={ref => this.email = ref} type="email" placeholder="Email"/>
               </FormGroup>
@@ -50,18 +64,20 @@ export default class Login extends PureComponent {
                 <FormControl inputRef={ref => this.pw = ref} type="password" placeholder="Password"/>
               </FormGroup>
               <FormGroup>
-                <Button type="submit" bsStyle="success" block>Login</Button>
+                <FormControl inputRef={ref => this.pwConfirm = ref} type="password" placeholder="Confirm Password"/>
               </FormGroup>
               <FormGroup>
-                <p>Don't have an account? <Link to="/register">Sign Up</Link></p>
+                <Button type="submit" bsStyle="success" block>Register</Button>
+              </FormGroup>
+              <FormGroup>
+                <p>Already have an account? <Link to="/login">Login</Link></p>
               </FormGroup>
               <FormGroup>
                 <hr />
-                <p>Sign in with
+                <p>Register with
                   <Icon name="facebook" faSize="2x" onClick={this.onSocialLogin('facebook.com')}/>
                   <Icon name="google" faSize="2x" onClick={this.onSocialLogin('google.com')}/>
-                  <Icon name="twitter" faSize="2x" onClick={this.onSocialLogin('twitter.com')}/>
-                </p>
+                  <Icon name="twitter" faSize="2x" onClick={this.onSocialLogin('twitter.com')}/></p>
               </FormGroup>
             </Form>
           </Col>
