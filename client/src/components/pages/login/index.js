@@ -8,8 +8,9 @@ import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Button from 'react-bootstrap/lib/Button';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Icon from '../../icon';
+import { authenticatedPost } from '../../../helpers/fetch';
 
 export default class Login extends PureComponent {
   static contextTypes = {
@@ -28,8 +29,7 @@ export default class Login extends PureComponent {
 
     try {
       const data = await loginWithProvider(provider);
-      //TODO save user in DB if not exists
-      console.log(data);
+      await authenticatedPost('/user/validate', {user: data.user});
     } catch (err) {
       this.context.growl.error(err.message);
     }
