@@ -36,10 +36,6 @@ function PublicRoute({ component: Component, authed, ...rest }) {
 
 class App extends PureComponent {
 
-  constructor() {
-    super();
-  }
-
   componentDidMount() {
     this.removeListener = firebaseAuth().onAuthStateChanged(user => {
       if (user) {
@@ -59,13 +55,19 @@ class App extends PureComponent {
   };
 
   render() {
-    const { loggedIn } = this.props;
+    const { alerts, loggedIn, onDismissAlert } = this.props;
     return (
       <BrowserRouter>
         <div>
-          <AlertList timeout={4000} dismissTitle="Dismiss" alerts={this.props.alerts}
-                     onDismiss={this.props.onDismissAlert}/>
-          <Header loggedIn={loggedIn} logout={this.log_out}/>
+          <AlertList timeout={4000}
+                     dismissTitle="Dismiss"
+                     alerts={alerts}
+                     onDismiss={onDismissAlert}
+          />
+          <Header
+            loggedIn={loggedIn}
+            logout={this.log_out}
+          />
           <div className="container">
             <div className="row">
               <Switch>

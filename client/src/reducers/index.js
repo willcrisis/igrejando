@@ -4,7 +4,7 @@ import alerts from './alerts';
 
 const igrejandoApp = combineReducers({
   alerts,
-  auth
+  loggedIn: auth
 });
 
 export default igrejandoApp;

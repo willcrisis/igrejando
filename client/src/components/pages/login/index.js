@@ -49,7 +49,6 @@ class Login extends PureComponent {
               </FormGroup>
               <FormGroup>
                 <Button type="submit" bsStyle="success" block>Login</Button>
-                <Button bsStyle="info" onClick={() => this.props.showInfoAlert('Yeah! Worked', 'MABOY!')} block>Show Alert</Button>
               </FormGroup>
               <FormGroup>
                 <p>Don't have an account? <Link to="/register">Sign Up</Link></p>

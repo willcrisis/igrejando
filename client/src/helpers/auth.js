@@ -12,7 +12,7 @@ export async function register({ email, pw, displayName }) {
 
 export const socialLogin = async provider => {
   const data = await loginWithProvider(provider);
-  await authenticatedPost('/user/validate', { user: data.user });
+  return await authenticatedPost('/user/validate', { user: data.user });
 };
 
 export function logout() {
