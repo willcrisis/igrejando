@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import App from './components';
+import igrejandoApp from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 import firebase from 'firebase';
 import './index.scss';
@@ -14,5 +18,7 @@ firebase.initializeApp({
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID || 'FIREBASE_MESSAGING_SENDER_ID'
 });
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const store = createStore(igrejandoApp, applyMiddleware(thunkMiddleware));
+
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();

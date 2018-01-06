@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { socialLogin, loginWithEmail } from '../../../helpers/auth';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
@@ -10,11 +10,9 @@ import Button from 'react-bootstrap/lib/Button';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import { Link } from 'react-router-dom';
 import Icon from '../../icon';
+import { addInfoAlert, addErrorAlert } from '../../../actions/alerts';
 
-export default class Login extends PureComponent {
-  static contextTypes = {
-    growl: PropTypes.object.isRequired,
-  };
+class Login extends PureComponent {
 
   onSocialLogin = provider => async e => {
     e.preventDefault();
@@ -22,7 +20,7 @@ export default class Login extends PureComponent {
     try {
       await socialLogin(provider);
     } catch (err) {
-      this.context.growl.error(err.message);
+      this.props.showErrorAlert(err.message);
     }
   };
 
@@ -32,7 +30,7 @@ export default class Login extends PureComponent {
     try {
       await loginWithEmail(this.email.value, this.pw.value);
     } catch (err) {
-      this.context.growl.error('Invalid Username or Password');
+      this.props.showErrorAlert('Invalid Username or Password');
     }
   };
 
@@ -51,6 +49,7 @@ export default class Login extends PureComponent {
               </FormGroup>
               <FormGroup>
                 <Button type="submit" bsStyle="success" block>Login</Button>
+                <Button bsStyle="info" onClick={() => this.props.showInfoAlert('Yeah! Worked', 'MABOY!')} block>Show Alert</Button>
               </FormGroup>
               <FormGroup>
                 <p>Don't have an account? <Link to="/register">Sign Up</Link></p>
@@ -70,3 +69,18 @@ export default class Login extends PureComponent {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    showInfoAlert: (message, title) => {
+      dispatch(addInfoAlert(message, title));
+    },
+    showErrorAlert: (message, title) => {
+      dispatch(addErrorAlert(message, title));
+    }
+  }
+};
+
+const LoginContainer = connect(null, mapDispatchToProps)(Login);
+
+export default LoginContainer;
