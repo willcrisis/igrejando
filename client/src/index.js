@@ -7,6 +7,8 @@ import App from './components';
 import igrejandoApp from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 import firebase from 'firebase';
+import { loadTranslations, setLocale, syncTranslationWithStore } from 'react-redux-i18n';
+import Translations from './translations';
 import './index.scss';
 
 firebase.initializeApp({
@@ -19,6 +21,9 @@ firebase.initializeApp({
 });
 
 const store = createStore(igrejandoApp, applyMiddleware(thunkMiddleware));
+syncTranslationWithStore(store);
+store.dispatch(loadTranslations(Translations));
+store.dispatch(setLocale('en'));
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();

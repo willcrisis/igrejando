@@ -1,3 +1,5 @@
+import { I18n } from 'react-redux-i18n';
+
 export const ADD_ALERT = 'ADD_ALERT';
 export const DISMISS_ALERT = 'DISMISS_ALERT';
 
@@ -7,8 +9,8 @@ const addAlert = (type, message, title, timeout) => {
     alert: {
       id: (new Date()).getTime(),
       type,
-      message,
-      headline: title,
+      message: I18n.t(message),
+      headline: title && I18n.t(title),
       timeout: typeof timeout === 'undefined' ? 4000 : timeout
     }
   }
