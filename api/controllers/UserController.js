@@ -26,7 +26,6 @@ module.exports = {
       if (firebaseUser.email !== email) {
         return res.forbidden();
       }
-      console.log('will save');
       const result = await ModelService.create(User, { uid, displayName, email, photoURL });
       return res.ok(result);
     } catch (err) {

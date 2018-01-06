@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { register, socialLogin } from '../../../helpers/auth';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
@@ -10,11 +10,9 @@ import Button from 'react-bootstrap/lib/Button';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import { Link } from 'react-router-dom';
 import Icon from '../../icon';
+import {addWarningAlert, addErrorAlert} from '../../../actions/alerts';
 
-export default class Login extends PureComponent {
-  static contextTypes = {
-    growl: PropTypes.object.isRequired,
-  };
+export class Register extends PureComponent {
 
   onSocialLogin = provider => async e => {
     e.preventDefault();
@@ -22,15 +20,19 @@ export default class Login extends PureComponent {
     try {
       await socialLogin(provider);
     } catch (err) {
-      this.context.growl.error(err.message);
+      this.props.showWarningAlert(err.message);
     }
   };
 
   signUp = async e => {
+    const {
+      showWarningAlert
+    } = this.props;
+
     e.preventDefault();
 
     if (this.pw.value !== this.pwConfirm.value) {
-      return this.context.growl.warning('Passwords doesn\'t match');
+      return showWarningAlert('Passwords doesn\'t match');
     }
 
     try {
@@ -39,11 +41,11 @@ export default class Login extends PureComponent {
     } catch (err) {
       const { code } = err;
       if (code === 'auth/weak-password') {
-        return this.context.growl.warning('Password should be at least 6 characters');
+        return showWarningAlert('Password should be at least 6 characters');
       } else if (code === 'auth/email-already-in-use') {
-        return this.context.growl.warning('The email address is already in use by another account.');
+        return showWarningAlert('The email address is already in use by another account.');
       }
-      this.context.growl.error(err.message);
+      showWarningAlert(err.message);
     }
   };
 
@@ -82,7 +84,22 @@ export default class Login extends PureComponent {
             </Form>
           </Col>
         </Row>
-      </Grid >
+      </Grid>
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    showWarningAlert: (message, title) => {
+      dispatch(addWarningAlert(message, title));
+    },
+    showErrorAlert: (message, title) => {
+      dispatch(addErrorAlert(message, title));
+    }
+  }
+};
+
+const RegisterContainer = connect(null, mapDispatchToProps)(Register);
+
+export default RegisterContainer;
