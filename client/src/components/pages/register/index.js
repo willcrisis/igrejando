@@ -10,7 +10,8 @@ import Button from 'react-bootstrap/lib/Button';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import { Link } from 'react-router-dom';
 import Icon from '../../icon';
-import {addWarningAlert, addErrorAlert} from '../../../actions/alerts';
+import { addWarningAlert, addErrorAlert } from '../../../actions/alerts';
+import { Translate, I18n } from 'react-redux-i18n';
 
 export class Register extends PureComponent {
 
@@ -32,18 +33,17 @@ export class Register extends PureComponent {
     e.preventDefault();
 
     if (this.pw.value !== this.pwConfirm.value) {
-      return showWarningAlert('Passwords doesn\'t match');
+      return showWarningAlert('error.passwordsDoesntMatch');
     }
 
     try {
-      const data = await register({ email: this.email.value, pw: this.pw.value, displayName: this.name.value });
-      console.log(data);
+      await register({ email: this.email.value, pw: this.pw.value, displayName: this.name.value });
     } catch (err) {
       const { code } = err;
       if (code === 'auth/weak-password') {
-        return showWarningAlert('Password should be at least 6 characters');
+        return showWarningAlert('error.weakPassword');
       } else if (code === 'auth/email-already-in-use') {
-        return showWarningAlert('The email address is already in use by another account.');
+        return showWarningAlert('error.emailAlreadyInUse');
       }
       showWarningAlert(err.message);
     }
@@ -54,29 +54,31 @@ export class Register extends PureComponent {
       <Grid>
         <Row>
           <Col sm={4} smOffset={4}>
-            <h1>Sign Up</h1>
+            <h1><Translate value="register.signUp"/></h1>
             <Form onSubmit={this.signUp}>
               <FormGroup>
-                <FormControl inputRef={ref => this.name = ref} placeholder="Name"/>
+                <FormControl inputRef={ref => this.name = ref} placeholder={I18n.t('user.name')}/>
               </FormGroup>
               <FormGroup>
-                <FormControl inputRef={ref => this.email = ref} type="email" placeholder="Email"/>
+                <FormControl inputRef={ref => this.email = ref} type="email" placeholder={I18n.t('user.email')}/>
               </FormGroup>
               <FormGroup>
-                <FormControl inputRef={ref => this.pw = ref} type="password" placeholder="Password"/>
+                <FormControl inputRef={ref => this.pw = ref} type="password" placeholder={I18n.t('user.password')}/>
               </FormGroup>
               <FormGroup>
-                <FormControl inputRef={ref => this.pwConfirm = ref} type="password" placeholder="Confirm Password"/>
+                <FormControl inputRef={ref => this.pwConfirm = ref} type="password"
+                             placeholder={I18n.t('user.confirmPassword')}/>
               </FormGroup>
               <FormGroup>
-                <Button type="submit" bsStyle="success" block>Register</Button>
+                <Button type="submit" bsStyle="success" block><Translate value="register.label"/></Button>
               </FormGroup>
               <FormGroup>
-                <p>Already have an account? <Link to="/login">Login</Link></p>
+                <p><Translate value="register.alreadyHaveAnAccount"/> <Link to="/login"><Translate value="login.label"/></Link>
+                </p>
               </FormGroup>
               <FormGroup>
                 <hr />
-                <p>Register with
+                <p><Translate value="register.registerWith"/>
                   <Icon name="facebook" faSize="2x" onClick={this.onSocialLogin('facebook.com')}/>
                   <Icon name="google" faSize="2x" onClick={this.onSocialLogin('google.com')}/>
                   <Icon name="twitter" faSize="2x" onClick={this.onSocialLogin('twitter.com')}/></p>
