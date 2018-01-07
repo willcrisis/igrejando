@@ -5,6 +5,7 @@ import NavItem from 'react-bootstrap/lib/NavItem';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Translate } from 'react-redux-i18n';
 
 export default class Header extends PureComponent {
   render() {
@@ -12,7 +13,9 @@ export default class Header extends PureComponent {
       <Navbar inverse collapseOnSelect fluid fixedTop>
         <Navbar.Header>
           <Navbar.Brand>
-            <Link to="/">Igrejando</Link>
+            <Link to="/">
+              <Translate value="app.name"/>
+            </Link>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
@@ -20,15 +23,21 @@ export default class Header extends PureComponent {
           {this.props.loggedIn
             ?
             <Nav pullRight>
-              <NavItem eventKey={1} onClick={() => this.props.logout()}>Logout</NavItem>
+              <NavItem eventKey={1} onClick={() => this.props.logout()}>
+                <Translate value="header.logout"/>
+              </NavItem>
             </Nav>
             :
             <Nav pullRight>
               <LinkContainer to="/login">
-                <NavItem eventKey={2}>Login</NavItem>
+                <NavItem eventKey={2}>
+                  <Translate value="login.label"/>
+                </NavItem>
               </LinkContainer>
               <LinkContainer to="/register">
-                <NavItem eventKey={3}>Register</NavItem>
+                <NavItem eventKey={3}>
+                  <Translate value="register.label"/>
+                </NavItem>
               </LinkContainer>
             </Nav>
           }

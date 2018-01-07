@@ -1,0 +1,37 @@
+{
+  "app": {
+    "name": "Igrejando"
+  },
+  "home": "Home",
+  "dashboard": "Dashboard",
+  "header": {
+    "logout": "Logout"
+  },
+  "login": {
+    "label": "Login",
+    "signInWith": "Sign in with",
+    "dontHaveAnAccount": "Don't have an account?"
+  },
+  "register": {
+    "label": "Register",
+    "signUp": "Sign Up",
+    "alreadyHaveAnAccount": "Already have an account?",
+    "registerWith": "Register with"
+  },
+  "user": {
+    "email": "E-mail",
+    "password": "Password",
+    "name": "Name",
+    "confirmPassword": "Confirm Password"
+  },
+  "error": {
+    "invalidUsernamePassword": "Invalid Username or Password",
+    "passwordsDoesntMatch": "Passwords doesn't match",
+    "weakPassword": "Password should be at least 6 characters",
+    "emailAlreadyInUse": "The email address is already in use by another account.",
+    "accountAlreadyExists": "An account already exists for this email address. Please login with your email and password, or try recovering your password."
+  },
+  "alert": {
+    "dismiss": "Dismiss"
+  }
+}

@@ -11,6 +11,7 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import { Link } from 'react-router-dom';
 import Icon from '../../icon';
 import { addInfoAlert, addErrorAlert } from '../../../actions/alerts';
+import { Translate, I18n } from 'react-redux-i18n';
 
 class Login extends PureComponent {
 
@@ -30,7 +31,7 @@ class Login extends PureComponent {
     try {
       await loginWithEmail(this.email.value, this.pw.value);
     } catch (err) {
-      this.props.showErrorAlert('Invalid Username or Password');
+      this.props.showErrorAlert('error.invalidUsernamePassword');
     }
   };
 
@@ -39,23 +40,23 @@ class Login extends PureComponent {
       <Grid>
         <Row>
           <Col sm={4} smOffset={4}>
-            <h1>Login</h1>
+            <h1><Translate value="login.label"/></h1>
             <Form onSubmit={this.login}>
               <FormGroup>
-                <FormControl inputRef={ref => this.email = ref} type="email" placeholder="Email"/>
+                <FormControl inputRef={ref => this.email = ref} type="email" placeholder={I18n.t('user.email')}/>
               </FormGroup>
               <FormGroup>
-                <FormControl inputRef={ref => this.pw = ref} type="password" placeholder="Password"/>
+                <FormControl inputRef={ref => this.pw = ref} type="password" placeholder={I18n.t('user.password')}/>
               </FormGroup>
               <FormGroup>
-                <Button type="submit" bsStyle="success" block>Login</Button>
+                <Button type="submit" bsStyle="success" block><Translate value="login.label"/></Button>
               </FormGroup>
               <FormGroup>
-                <p>Don't have an account? <Link to="/register">Sign Up</Link></p>
+                <p><Translate value="login.dontHaveAnAccount"/> <Link to="/register"><Translate value="register.signUp"/></Link></p>
               </FormGroup>
               <FormGroup>
                 <hr />
-                <p>Sign in with
+                <p><Translate value="login.signInWith"/>
                   <Icon name="facebook" faSize="2x" onClick={this.onSocialLogin('facebook.com')}/>
                   <Icon name="google" faSize="2x" onClick={this.onSocialLogin('google.com')}/>
                   <Icon name="twitter" faSize="2x" onClick={this.onSocialLogin('twitter.com')}/>

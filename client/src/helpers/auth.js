@@ -36,7 +36,7 @@ async function retryWithAnotherProvider({ credential, email }) {
 
   const providers = await auth.fetchProvidersForEmail(email);
   if (providers[ 0 ] === 'password') {
-    throw new Error('An account already exists for this email address. Please login with your email and password, or try recovering your password.');
+    throw new Error('error.accountAlreadyExists');
   }
 
   const providerInstance = fetchProviderByName(providers[ 0 ]);

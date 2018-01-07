@@ -11,6 +11,7 @@ import Dashboard from './pages/dashboard';
 import Register from './pages/register';
 import { dismissAlert } from '../actions/alerts';
 import { logoutSuccess, loginSuccess } from '../actions/auth';
+import { I18n } from 'react-redux-i18n';
 
 function PrivateRoute({ component: Component, authed, ...rest }) {
   return (
@@ -60,7 +61,7 @@ class App extends PureComponent {
       <BrowserRouter>
         <div>
           <AlertList timeout={4000}
-                     dismissTitle="Dismiss"
+                     dismissTitle={I18n.t('alert.dismiss')}
                      alerts={alerts}
                      onDismiss={onDismissAlert}
           />
