@@ -82,7 +82,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "yarn build && node app.js",
+    "start": "yarn build && yarn db-go-up && node app.js",
     "front": "node client/scripts/start.js",
     "server": "nodemon --inspect .",
     "dev": "concurrently  \"yarn server\" \"yarn front\"",
