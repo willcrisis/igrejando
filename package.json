@@ -18,6 +18,8 @@
     "classnames": "^2.2.5",
     "concurrently": "^3.5.1",
     "css-loader": "0.28.4",
+    "db-migrate": "^0.10.2",
+    "db-migrate-pg": "^0.2.5",
     "dotenv": "4.0.0",
     "ejs": "2.3.4",
     "eslint": "4.4.1",
@@ -66,6 +68,7 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "sails": "~0.12.14",
+    "sails-db-migrate": "^1.5.0",
     "sails-disk": "~0.10.9",
     "sails-hook-autoreload": "^0.14.3",
     "sails-hook-dotenv": "^0.1.1",
@@ -84,7 +87,10 @@
     "server": "nodemon --inspect .",
     "dev": "concurrently  \"yarn server\" \"yarn front\"",
     "build": "node client/scripts/build.js",
-    "test": "node client/scripts/test.js --env=jsdom"
+    "test": "node client/scripts/test.js --env=jsdom",
+    "db-create-patch": "node ./node_modules/.bin/grunt db:migrate:create",
+    "db-go-up": "node ./node_modules/.bin/grunt db:migrate:up",
+    "db-go-down": "node ./node_modules/.bin/grunt db:migrate:down"
   },
   "proxy": "http://localhost:1337",
   "jest": {

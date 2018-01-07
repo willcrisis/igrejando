@@ -11,7 +11,7 @@
  * Unless you know what you're doing, you shouldn't change this file.
  * Check out the `tasks` directory instead.
  */
-
+require('dotenv').config();
 module.exports = function(grunt) {
 
 
