@@ -76,7 +76,7 @@ module.exports.connections = {
   *                                                                          *
   *                                                                          *
   ***************************************************************************/
-  somePostgresqlServer: {
+  postgresql: {
     adapter: 'sails-postgresql',
     host: url.host,
     user: url.auth.split(':')[0],
