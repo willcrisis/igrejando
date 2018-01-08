@@ -28,8 +28,19 @@ to see how to get it), convert it to 1-line json and add it to `FIREBASE_SERVICE
 
 ## Building Production Version
  
-* Run `yarn build` or `npm run build` to build `assets` folder with optimized bundles.
-* Alternatively, you can run `yarn start` or `npm start` for building bundles and running server with just one command.
+* Run `yarn build` or `npm run build` to build `assets` folder with optimized bundles. After that, run `yarn start` or `npm start` to run server.
+
+## Deploying to Heroku
+
+* Fork this repo
+* Create an account on [Heroku](https://www.heroku.com)
+* Create a new app on Heroku, and set deployments to your GitHub repository
+* In [Firebase Console](https://console.firebase.google.com/), go to the app you created in [Getting Started](#getting-started), 
+navigate to Authentication -> Login Method and add `your-heroku-app.herokuapp.com` to Authorized Domains list
+* Back to Heroku dashboard, click on `Settings` tab, then in `Reveal Config Vars` button and add all environment variables 
+existing in `.env.example` file, with your values.
+* Go to Deploy, and in page bottom, click on `Deploy Branch` button.
+* That's it.
  
 ## Contributing
 

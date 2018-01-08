@@ -51,6 +51,7 @@
     "include-all": "^1.0.0",
     "jest": "20.0.4",
     "node-fetch": "^1.7.3",
+    "node-sass": "^4.7.2",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.6",
@@ -73,6 +74,7 @@
     "sails-disk": "~0.10.9",
     "sails-hook-dotenv": "^0.1.1",
     "sails-postgresql": "^0.11.4",
+    "sass-loader": "^6.0.6",
     "style-loader": "0.18.2",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.5.9",
@@ -82,7 +84,8 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "yarn build && yarn db-go-up && node app.js",
+    "heroku-postbuild": "yarn build",
+    "start": "node app.js",
     "front": "node client/scripts/start.js",
     "server": "nodemon --inspect .",
     "dev": "concurrently  \"yarn server\" \"yarn front\"",
@@ -133,10 +136,6 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  },
-  "devDependencies": {
-    "node-sass": "^4.5.3",
-    "sass-loader": "^6.0.6"
   },
   "main": "app.js",
   "repository": {
