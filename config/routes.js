@@ -21,16 +21,23 @@
  */
 
 module.exports.routes = {
-
   /***************************************************************************
-  *                                                                          *
-  * Custom routes here...                                                    *
-  *                                                                          *
-  * If a request to a URL doesn't match any of the custom routes above, it   *
-  * is matched against Sails route blueprints. See `config/blueprints.js`    *
-  * for configuration options and examples.                                  *
-  *                                                                          *
-  ***************************************************************************/
+   *                                                                          *
+   * Custom routes here...                                                    *
+   *                                                                          *
+   * If a request to a URL doesn't match any of the custom routes above, it   *
+   * is matched against Sails route blueprints. See `config/blueprints.js`    *
+   * for configuration options and examples.                                  *
+   *                                                                          *
+   ***************************************************************************/
 
-  'POST /login': 'AuthController.login'
+  'POST /login': 'AuthController.login',
+
+  '/*': {
+    fn: (req, res) => {
+      return res.render('index.ejs');
+    },
+    skipAssets: true,
+    skipRegex:/^\/api\/.*$/
+  },
 };
