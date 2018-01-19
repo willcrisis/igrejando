@@ -143,3 +143,5 @@ yarn-error.log*
 /assets
 
 /config/serviceAccountKey.json
+
+/views/index.ejs

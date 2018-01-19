@@ -244,6 +244,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+      filename: paths.appIndexEjs,
       minify: {
         removeComments: true,
         collapseWhitespace: true,
