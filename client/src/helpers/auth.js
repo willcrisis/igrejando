@@ -5,7 +5,7 @@ export async function register({ email, pw, displayName }) {
   let user = await firebaseAuth().createUserWithEmailAndPassword(email, pw);
   await user.updateProfile({ displayName: displayName });
   user = await firebaseAuth().currentUser;
-  await authenticatedPost('/user/validate', { user });
+  await authenticatedPost('/api/user/validate', { user });
   await user.sendEmailVerification();
   return user;
 }
