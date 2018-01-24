@@ -62,9 +62,10 @@ function fetchProviderByName(provider) {
   return providerInstance;
 }
 
-export function loginWithEmail(email, pw) {
-  return firebaseAuth().signInWithEmailAndPassword(email, pw)
-}
+export const loginWithEmail = async (email, pw) => {
+  const user = await firebaseAuth().signInWithEmailAndPassword(email, pw);
+  return await authenticatedPost('/api/user/validate', { user });
+};
 
 export function resetPassword(email) {
   return firebaseAuth().sendPasswordResetEmail(email)
